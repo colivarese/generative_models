@@ -27,7 +27,8 @@ class VanillaVAE(nn.Module):
             layers.append(
                 nn.Sequential(
                     nn.Conv2d(in_channels, out_channels=h_dim, kernel_size=5, stride=2),
-                    #nn.BatchNorm2d(h_dim),
+                    nn.BatchNorm2d(h_dim),
+                    #nn.LeakyReLU())
                     nn.ReLU())
                 )
             in_channels = h_dim
@@ -49,15 +50,15 @@ class VanillaVAE(nn.Module):
                 nn.Sequential(
                     nn.ConvTranspose2d(hidden_dims[i], hidden_dims[i+1], kernel_size=5, stride=2,),
                     nn.BatchNorm2d(hidden_dims[i+1]),
+                    #nn.LeakyReLU())
                     nn.ReLU())
             )
 
         self.decoder = nn.Sequential(*layers)
-        h = hidden_dims[-2]
         self.out_layer = nn.Sequential(
             nn.ConvTranspose2d(hidden_dims[-1], hidden_dims[-1], kernel_size=4),
             nn.BatchNorm2d(hidden_dims[-1]),
-            nn.ReLU(),
+            #nn.ReLU(),
             #nn.Conv2d(hidden_dims[-2], out_channels=1, kernel_size=4),
             #nn.Tanh()
             nn.Sigmoid()
