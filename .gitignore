@@ -1,4 +1,9 @@
 .venv
 data
 __pycache__/
- *.pyc
+*.pyc
+wandb/**
+*.pth
+*.pt
+*.png
+**/*.png
